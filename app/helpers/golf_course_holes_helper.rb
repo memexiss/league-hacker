@@ -1,0 +1,2 @@
+module GolfCourseHolesHelper
+end

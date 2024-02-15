@@ -1,0 +1,18 @@
+<%= render "layouts/sidebar" %>
+    <main class="py-10 lg:pl-72">
+      <%= form_for ([:admin, @membership]) do |f| %>
+        <div class="field">
+          <%= f.label :user_id %><br />
+          <%= f.select :user_id, @users.map { |user| [user.name, user.id] } %>
+        </div>
+        <div class="field">
+          <%= f.label :league_id %><br />
+          <%= f.select :league_id, @leagues.map { |league| [league.name, league.id] } %>
+        </div>
+        <div class="field">
+          <%= f.label :membership_type %><br />
+          <%= f.select :membership_type, ['manager', 'player'] %>
+        </div>
+        <%= f.submit 'Create Membership' %>
+      <% end %>
+    </main>

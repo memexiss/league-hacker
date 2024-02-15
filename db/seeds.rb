@@ -7,3 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+user = User.find_or_initialize_by email: "admin@leaguehacker.com"
+if user.new_record? 
+  user.update name: "Admin", role: :admin, phone: "5554321234", password: '1234567890'
+end

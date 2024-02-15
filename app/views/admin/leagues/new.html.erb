@@ -1,0 +1,18 @@
+<%= render "layouts/sidebar" %>
+    <main class="py-10 lg:pl-72">
+      <%= form_for ([:admin, @league]) do |f| %>
+        <div class="field">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :payment_link %><br />
+          <%= f.text_field :payment_link %>
+        </div>
+        <div class="field">
+          <%= f.label :league_type %><br />
+          <%= f.select :league_type, ['team', 'individual'] %>
+        </div>
+        <%= f.submit 'Create league' %>
+      <% end %>
+    </main>

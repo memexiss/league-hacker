@@ -176,6 +176,10 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.4)
+    phony (2.20.12)
+    phony_rails (0.14.13)
+      activesupport (>= 3.0)
+      phony (> 2.15)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -334,6 +338,7 @@ DEPENDENCIES
   minitest-rails
   minitest-stub_any_instance
   pg (~> 1.1)
+  phony_rails (~> 0.14.2)
   pry-rails
   puma (>= 5.0)
   rails (~> 7.1.3)
