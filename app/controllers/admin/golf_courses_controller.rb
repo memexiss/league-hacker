@@ -21,6 +21,10 @@ class Admin::GolfCoursesController < ApplicationController
     end
   end  
 
+  def show 
+    @course = GolfCourse.find(params[:id])
+  end
+  
   def edit
     @course = GolfCourse.find(params[:id])
   end

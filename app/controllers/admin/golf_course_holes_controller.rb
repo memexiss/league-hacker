@@ -3,6 +3,7 @@ class Admin::GolfCourseHolesController < ApplicationController
   before_action :verify_admin
   
   def edit
+    @courses = GolfCourse.all
     @course_holes = GolfCourse::Hole.find(params[:id])
   end
 
