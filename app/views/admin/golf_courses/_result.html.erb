@@ -12,10 +12,16 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-lg-6 text-center mx-auto">
-      <h4>Course info</h4>
+      <h4>Courses from Api: <%= @courses.count %></h4>
       <dl>
-      <% if @course.present? && @course.is_a?(Array) %>
-        <% course_data = @course.first %>
+      <% @courses.each do |course_data| %>
+        <ol>
+          <li><%= course_data['name'] %></li> 
+        </ol>
+      <% end %>
+
+      Details: 
+      <% @courses.each do |course_data| %>
         <dl>
           <dt>Name: <%= course_data['name'] %></dt>
 
@@ -47,8 +53,6 @@
 
           <dt>Length Format: <%= course_data['lengthFormat'] %></dt>
         </dl>
-      <% else %>
-        <p>No course found.</p>
       <% end %>
       </dl>
     </div>
