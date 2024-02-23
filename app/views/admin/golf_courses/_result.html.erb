@@ -1,0 +1,57 @@
+<head>
+  <title>LeagueHacker</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind",  "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "main", type: "module" %>
+</head>
+
+<%= render "layouts/sidebar" %>
+<main class="py-10 lg:pl-72">
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-lg-6 text-center mx-auto">
+      <h4>Course info</h4>
+      <dl>
+      <% if @course.present? && @course.is_a?(Array) %>
+        <% course_data = @course.first %>
+        <dl>
+          <dt>Name: <%= course_data['name'] %></dt>
+
+          <dt>Phone: <%= course_data['phone'] %></dt>
+
+          <dt>Website: <%= course_data['website'] %></dt>
+
+          <dt>Address: <%= course_data['address'] %></dt>
+
+          <dt>City: <%= course_data['city'] %></dt>
+
+          <dt>State: <%= course_data['state'] %></dt>
+
+          <dt>Zip: <%= course_data['zip'] %></dt>
+
+          <dt>Country: <%= course_data['country'] %></dt>
+
+          <dt>Remote Api Version: <%= course_data['__v'] %></dt>
+
+          <dt>Remote Api ID: <%= course_data['_id'] %></dt>
+
+          <dt>Coordinates: <%= course_data['coordinates'] %></dt>
+
+          <dt>Fairway Grass: <%= course_data['fairwayGrass'] %></dt>
+
+          <dt>Green Grass: <%= course_data['greenGrass'] %></dt>
+
+          <dt>Number of holes: <%= course_data['number_of_holes'] %></dt>
+
+          <dt>Length Format: <%= course_data['lengthFormat'] %></dt>
+        </dl>
+      <% else %>
+        <p>No course found.</p>
+      <% end %>
+      </dl>
+    </div>
+  </div>
+</div>
+</main>

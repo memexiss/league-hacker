@@ -11,6 +11,7 @@ gem "puma", ">= 5.0"
 gem "jbuilder"
 gem "redis", ">= 4.0.1"
 gem 'esbuild-rails'
+gem 'phony_rails', '~> 0.14.2'
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
 

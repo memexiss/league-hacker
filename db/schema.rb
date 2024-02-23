@@ -14,15 +14,193 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_31_154057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "golf_course_hole_tees", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.integer "yards"
+    t.bigint "golf_course_hole_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golf_course_hole_id"], name: "index_golf_course_hole_tees_on_golf_course_hole_id"
+  end
+
+  create_table "golf_course_holes", force: :cascade do |t|
+    t.bigint "golf_course_id"
+    t.integer "hole"
+    t.integer "par"
+    t.integer "handicap"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golf_course_id", "hole"], name: "index_golf_course_holes_on_golf_course_id_and_hole", unique: true
+  end
+
+  create_table "golf_course_tee_boxes", force: :cascade do |t|
+    t.string "tee"
+    t.integer "slope"
+    t.decimal "handicap"
+    t.bigint "golf_course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golf_course_id"], name: "index_golf_course_tee_boxes_on_golf_course_id"
+  end
+
+  create_table "golf_courses", force: :cascade do |t|
+    t.string "name"
+    t.integer "remote_api_version"
+    t.string "remote_api_id"
+    t.string "address"
+    t.string "city"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.string "country"
+    t.string "fairway_grass"
+    t.string "green_grass"
+    t.integer "number_of_holes"
+    t.string "length_format"
+    t.string "phone"
+    t.string "state"
+    t.string "website"
+    t.string "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "league_announcements", force: :cascade do |t|
+    t.bigint "league_id"
+    t.string "title"
+    t.text "body"
+    t.datetime "published_at"
+    t.datetime "unpublished_at"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_announcements_on_league_id"
+  end
+
+  create_table "league_events", force: :cascade do |t|
+    t.integer "event_type"
+    t.date "start_date"
+    t.date "end_date"
+    t.decimal "entry_fee"
+    t.integer "number_of_rounds"
+    t.decimal "per_round_fee"
+    t.integer "average_holes_per_round"
+    t.integer "status", default: 0
+    t.bigint "league_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_events_on_league_id"
+  end
+
+  create_table "league_events_flight_memberships", force: :cascade do |t|
+    t.bigint "flight_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flight_id"], name: "index_league_events_flight_memberships_on_flight_id"
+    t.index ["user_id"], name: "index_league_events_flight_memberships_on_user_id"
+  end
+
+  create_table "league_events_flights", force: :cascade do |t|
+    t.string "name"
+    t.bigint "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_league_events_flights_on_event_id"
+  end
+
+  create_table "league_events_rounds", force: :cascade do |t|
+    t.integer "position"
+    t.integer "scoring_format"
+    t.integer "playing_format"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "starting_hole"
+    t.integer "number_of_holes"
+    t.bigint "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_league_events_rounds_on_event_id"
+  end
+
+  create_table "league_events_rounds_scorecards", force: :cascade do |t|
+    t.bigint "round_id"
+    t.bigint "user_id"
+    t.decimal "score_gross"
+    t.decimal "score_net"
+    t.decimal "score_best_of_holes"
+    t.decimal "score_chicago"
+    t.decimal "score_stableford"
+    t.integer "computed_score_method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_league_events_rounds_scorecards_on_round_id"
+    t.index ["user_id"], name: "index_league_events_rounds_scorecards_on_user_id"
+  end
+
+  create_table "league_events_rounds_scorecards_entries", force: :cascade do |t|
+    t.integer "score"
+    t.datetime "submitted_at"
+    t.bigint "scorecard_id"
+    t.bigint "hole_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hole_id"], name: "index_league_events_rounds_scorecards_entries_on_hole_id"
+    t.index ["scorecard_id"], name: "index_league_events_rounds_scorecards_entries_on_scorecard_id"
+  end
+
+  create_table "league_events_team_users", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_league_events_team_users_on_team_id"
+    t.index ["user_id"], name: "index_league_events_team_users_on_user_id"
+  end
+
+  create_table "league_events_teams", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "name"
+    t.integer "handicap_format", default: 0
+    t.integer "handicap"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_league_events_teams_on_event_id"
+  end
+
+  create_table "league_memberships", force: :cascade do |t|
+    t.integer "membership_type"
+    t.bigint "league_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_memberships_on_league_id"
+    t.index ["user_id"], name: "index_league_memberships_on_user_id"
+  end
+
+  create_table "leagues", force: :cascade do |t|
+    t.string "name"
+    t.string "payment_link"
+    t.integer "league_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "name"
+    t.string "phone"
+    t.integer "role", default: 0
+    t.string "ghin_number"
+    t.decimal "ghin_handicap"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["ghin_number"], name: "index_users_on_ghin_number", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
