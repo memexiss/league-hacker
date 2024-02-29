@@ -120,7 +120,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_rounds do |t|
+    create_table :league_event_rounds do |t|
       t.integer :position
       t.integer :scoring_format
       t.integer :playing_format
@@ -133,14 +133,14 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_flights do |t|
+    create_table :league_event_flights do |t|
       t.string :name
       t.references :event
 
       t.timestamps
     end
 
-    create_table :league_events_teams do |t|
+    create_table :league_event_teams do |t|
       t.references :event
       t.string :name
       t.integer :handicap_format, default: 0 
@@ -157,7 +157,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_rounds_scorecards do |t|
+    create_table :league_event_round_scorecards do |t|
       t.references :round
       t.references :user
       t.decimal :score_gross
@@ -170,14 +170,14 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_flight_memberships do |t|
+    create_table :league_event_flight_memberships do |t|
       t.references :flight
       t.references :user
       
       t.timestamps
     end
 
-    create_table :league_events_rounds_scorecards_entries do |t|
+    create_table :league_event_round_scorecards_entries do |t|
       t.integer :score
       t.datetime :submitted_at
       t.references :scorecard
@@ -186,7 +186,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_team_users do |t|
+    create_table :league_event_team_users do |t|
       t.references :user
       t.references :team
 

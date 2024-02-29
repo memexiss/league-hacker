@@ -8,7 +8,12 @@ class Admin::LeaguesController < ApplicationController
   end
 
   def edit
+    @league = League.includes(:events).find(params[:id])
+  end
+
+  def show 
     @league = League.find(params[:id])
+    @event = League.find(params[:id]).events.first
   end
 
   def update
@@ -22,7 +27,10 @@ class Admin::LeaguesController < ApplicationController
   end  
 
   def new
+    @leagues = League.all
     @league = League.new
+    @event = @league.events.build
+    @round = @event.rounds.build
   end
 
   def create
@@ -45,6 +53,13 @@ class Admin::LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:league).permit(:name, :payment_link, :league_type)
+    params.require(:league).permit(
+      :name, :payment_link, :league_type, :logo,
+      events_attributes: [
+        :id, :start_date, :end_date, :event_type, :entry_fee, :number_of_rounds,
+        :per_round_fee, :average_holes_per_round, :status,
+        :league_id,
+      ]
+    )
   end
 end

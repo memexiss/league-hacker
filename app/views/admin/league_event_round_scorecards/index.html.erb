@@ -1,0 +1,52 @@
+<%= render "layouts/sidebar" %>
+<main class="py-10 lg:pl-72 pl-4 mx-auto">
+  <div class='px-10 lg:px-20'>
+  <div class="lg:flex lg:items-center lg:justify-between">
+    <h1 class='text-2xl'>Round <%= @round_number %>
+    </h1>
+    <%= link_to new_admin_league_event_round_scorecard_path(league_id: @league.id, event_id: @event.id, round_id: @round.id), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
+      <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+      </svg>
+      Add New Score
+    <% end %>
+    </div>
+
+    <div class='flex justify-center gap-1 5 break-all mt-4'>
+      <section class='w-2/3'>
+        <div class="inline-block min-w-full py-2 align-middle">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Player/Team Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Score Gross</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Score Net</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Score Chicago</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <% @round.scorecards.each do |scorecard| %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= scorecard.user.name %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_gross %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_net %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_chicago %></td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <%= link_to 'Edit', edit_admin_league_event_round_scorecard_path(league_id: @league.id, event_id: @event.id, round_id: @round.id, id: scorecard.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <%= button_to 'Delete User', admin_league_event_round_scorecard_path(league_id: @league.id, event_id: @event.id, round_id: @round.id, id: scorecard.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-indigo-600 hover:text-indigo-900" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+

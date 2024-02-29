@@ -1,18 +1,94 @@
-<%= render "layouts/sidebar" %>
-  <main class="py-10 lg:pl-72">
-    <%= form_for ([:admin, @league]) do |f| %>
-      <div class="field">
-        <%= f.label :name %><br />
-        <%= f.text_field :name, autofocus: true %>
-      </div>
-      <div class="field">
-        <%= f.label :payment_link %><br />
-        <%= f.text_field :payment_link %>
-      </div>
-      <div class="field">
-        <%= f.label :league_type %><br />
-        <%= f.select :league_type, ['team', 'individual'] %>
-      </div>
-      <%= f.submit 'Update league' %>
+<main class="py-10 lg:pl-72">
+<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+  <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+      <%= form_for([:admin, @league], html: { class: 'space-y-6' }) do |f| %>
+        <div>
+          <%= f.label :name, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= f.text_field :name, autofocus: true, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
+        <div>
+          <%= f.label :payment_link, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= f.text_field :payment_link, autofocus: true, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
+        <div>
+          <%= f.label :league_type, class: "block text-sm font-medium leading-6 text-gray-900" %><br />
+          <%= f.select :league_type, ['team', 'individual'], class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+        </div>
+          <%= f.label "League Logo", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.file_field :logo, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          <% @league.events.each do |r| %>
+          <%= f.fields_for :events, r do |event_form| %>
+          <%= event_form.label :event_type, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.select :event_type, ["league", "tournament"], class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :start_date, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.date_select :start_date, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :end_date, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.date_select :end_date, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :entry_fee, step: :any, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.number_field :entry_fee, step: :any, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :number_of_rounds, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.number_field :number_of_rounds, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :per_round_fee, step: :any, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.number_field :per_round_fee, step: :any, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :average_holes_per_round, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.number_field :average_holes_per_round, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.label :status, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= event_form.select :status, ["draft", "active"], class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+          </div>
+          <%= event_form.fields_for :rounds do |round_form| %>
+            <%= round_form.label :position, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.number_field :position, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :scoring_format, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.number_field :scoring_format, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :playing_format, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.select :playing_format, ["standard", "shamble", "scramble", "five_clubs_only", "red_white_blue"], class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :starting_hole, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.number_field :starting_hole, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :number_of_holes, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.number_field :number_of_holes, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :start_date, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.date_select :start_date, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+            <%= round_form.label :end_date, class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= round_form.date_select :end_date, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %>
+            </div>
+          <% end %>
     <% end %>
-  </main>
+    <% end %>
+        <%= f.submit 'Update league', class: "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      <% end %>
+  </div>
+</div>
+</main>
+<%= render "layouts/sidebar" %>
