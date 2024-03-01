@@ -39,7 +39,13 @@
                 <tr>
                   <td class="whitespace-nowrap py-4 text-sm font-medium text-indigo-600 hover:text-indigo-900 sm:pl-0 "><% if league.logo.attached? %><%= image_tag(league.logo, width: '180', height: '180') %><% end %></td>
                   <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-indigo-600 hover:text-indigo-900 sm:pl-0"><%= link_to league.name, admin_league_path(league) %></td>
-                  <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= league.events.first.event_type.titleize %></td>
+                  <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                    <% if league.events.first %>
+                      <%= league.events.first&.event_type&.titleize %>
+                    <% else %>
+                      No events setup yet 
+                    <% end %>
+                    </td>
                   <td class="relative py-4 text-right text-sm font-medium sm:pr-0">
                     <%= link_to 'Edit', edit_admin_league_path(league), class: "text-indigo-600 hover:text-indigo-900" %>
                   </td>
