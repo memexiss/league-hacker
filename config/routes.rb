@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :golf_courses
   resources :leagues
   namespace :admin do
-    root 'leagues#index'
+    root 'dashboard#index'
     resources :golf_courses do
       collection do
         get 'search'
