@@ -4,13 +4,10 @@ class Admin::LeagueEventRoundsController < ApplicationController
   before_action :set_league_event_and_round
   
   def index
-
   end
 
   def edit
     @round = League::Event::Round.find(params[:id])
-    @leagues = League.all
-    @users = User.all
   end
 
   def update
@@ -26,8 +23,6 @@ class Admin::LeagueEventRoundsController < ApplicationController
   def new
     @round_number = @event.rounds.count + 1
     @round = League::Event::Round.new
-    @leagues = League.all
-    @users = User.all
   end
 
   def create

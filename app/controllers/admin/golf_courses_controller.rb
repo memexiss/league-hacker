@@ -45,7 +45,6 @@ class Admin::GolfCoursesController < ApplicationController
     @course = GolfCourse.new(course_params)
   
     if @course.save
-      create_course_holes(@course, params[:golf_course]['holes_attributes'])
       redirect_to admin_golf_courses_path
     else
       redirect_to admin_golf_courses_path

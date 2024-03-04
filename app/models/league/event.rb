@@ -6,4 +6,12 @@ class League::Event < ApplicationRecord
 
   enum status: {draft: 0, active: 5}
   enum event_type: {league: 0, tournament: 10}
+
+  def self.status_select_options 
+    statuses.keys.map {|x| [x.titleize, x]}
+  end
+
+  def self.event_type_select_options 
+    event_types.keys.map {|x| [x.titleize, x]}
+  end  
 end

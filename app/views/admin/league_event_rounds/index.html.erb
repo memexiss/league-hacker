@@ -2,7 +2,10 @@
 <main class="py-10 lg:pl-72 pl-4 mx-auto">
   <div class='px-10 lg:px-20'>
   <div class="lg:flex lg:items-center lg:justify-between">
-    <h1 class='text-2xl'><%= @league.name %>
+    <h1 class='text-2xl'>
+      <%= link_to admin_league_path(@league), class: "text-blue-500 hover:underline text-indigo-600 hover:text-indigo-900" do %>
+        <%= @league.name %>
+      <% end %>
     </h1>
     <%= link_to new_admin_league_event_round_path(league_id: @league.id, event_id: @event.id), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
       <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -15,7 +18,7 @@
     <div class='flex justify-center gap-1 5 break-all mt-4'>
       <section class='w-2/3'>
         <h3 class='text-lg'><%= pluralize @event.rounds.count, "Rounds" %></h3>
-          <% @event.rounds.each_with_index do |round, index| %>
+          <% @event.rounds.each do |round| %>
         <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm my-5 ring-1 ring-gray-900/5 sm:rounded-xl">
           <li class="relative flex justify-between gap-x-6 px-4 py-5 sm:px-6">
             <div class="flex min-w-0 gap-x-4">
@@ -24,14 +27,13 @@
                 <p class="text-md pr-3">Start Date: <%= round.start_date.to_formatted_s(:short) %></p>
                 <p class="text-md ">End Date: <%= round.end_date.to_formatted_s(:short) %></p>
               </div>
-              <h1 class="text-3xl"><%= "Round #{index + 1}" %></h1>
               <p class="text-md text-gray-600">Scoring Format: <%= round.scoring_format %></p>
             </div>
 
             </div>
             <div class="flex shrink-0 items-center gap-x-4">
               <div class="hidden sm:flex sm:flex-col sm:items-end">
-                <%= link_to admin_league_event_round_scorecards_path(league_id: @league.id, event_id: @event.id, round_id: round.id, round_number: index + 1), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
+                <%= link_to admin_league_event_round_scorecards_path(league_id: @league.id, event_id: @event.id, round_id: round.id), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
                   View Scores
                 <% end %>
               </div>
@@ -62,4 +64,3 @@
     </div>
   </div>
 </main>
-

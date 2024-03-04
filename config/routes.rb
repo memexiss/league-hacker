@@ -24,9 +24,6 @@ Rails.application.routes.draw do
     end
     resources :league_announcements
     resources :league_memberships
-    resources :league_events 
-    resources :league_event_rounds
-    resources :league_event_round_scorecards
     resources :league_event_round_scorecards_entries
     resources :league_event_flights
     resources :league_event_flight_memberships

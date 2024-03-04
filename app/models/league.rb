@@ -6,4 +6,8 @@ class League < ApplicationRecord
 
   enum league_type: {team: 0, individual: 10}
   validate :name, :payment_link, :league_type
+
+  def self.league_type_select_options 
+    league_types.keys.map {|x| [x.titleize, x]}
+  end
 end
