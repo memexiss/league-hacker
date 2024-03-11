@@ -54,7 +54,11 @@
               Entry Fee <%= event.entry_fee %>
             </div>
             <div class="mx-auto text-center justify-center text-md">
-              <%= event.number_of_rounds %> Rounds
+              <% if event.number_of_rounds.nil? || event.number_of_rounds.zero? %>
+                No Rounds
+              <% else %>
+                <%= event.number_of_rounds %> Rounds
+              <% end %>
             </div>
             <div class="mx-auto text-center justify-center text-md">
               <%= event.per_round_fee %> Per Round Fee

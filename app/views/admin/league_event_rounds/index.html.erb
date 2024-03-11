@@ -44,6 +44,9 @@
                   Edit
                 <% end %>
               </div>
+              <div class="hidden sm:flex sm:flex-col sm:items-end">
+                <%= button_to 'Delete', admin_league_event_round_path(@league, @event, round), method: :delete, data: { confirm: 'Are you sure?' }, class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+              </div>
             </div>
           </li>
           <ul role="list" class="divide-y bg-gray-50 divide-gray-100 overflow-hidden shadow-sm ring-1 ring-gray-900/5 flex py-3 divide-x border-x border-gray-900/5">

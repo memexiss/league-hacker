@@ -1,1 +1,98 @@
-<%= render "layouts/navbar" %>
+<main class="py-10 lg:pl-72">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <% if user_signed_in? && @memberships.any? %> 
+        <div class="sm:flex-auto">
+          <h1 class="text-base font-semibold leading-6 text-gray-900">Player memberships rounds</h1>
+        </div>
+      </div>
+      <div class="flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">League</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Event</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Round</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Add Score</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <% @memberships.each do |membership| %>
+                  <% membership.league.events.each do |event| %>
+                    <% event.rounds.each do |round| %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= link_to membership.league.name, league_path(membership.league.id) %></td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.event_type %></td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= round.id %></td>  
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <button type="button">
+                            <%= link_to 'Add Score', new_scorecard_entry_path(round_id: round.id), class: "rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+                          </button>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <% if user_signed_in? && @memberships.any? %> 
+        <div class="sm:flex-auto">
+          <h1 class="text-base font-semibold leading-6 text-gray-900">Leaderboard</h1>
+        </div>
+      </div>
+      <div class="flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">League</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Event</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Round</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">User</th>
+                  <% GolfCourse::Hole.order(:hole).each do |hole| %>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Hole <%= hole.hole %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <% @memberships.each do |membership| %>
+                  <% membership.league.events.each do |event| %>
+                    <% event.rounds.each do |round| %>
+                      <% if round.scorecards.present? %>
+                        <% round.scorecards.order(score_gross: :desc).each do |scorecard| %>
+                          <tr>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= link_to membership.league.name, league_path(membership.league.id) %></td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.event_type %></td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= round.id %></td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.user.full_name %></td>
+                            <% GolfCourse::Hole.order(:hole).each do |hole| %>
+                              <% entry = scorecard.entries.find_by(hole_id: hole.id) %>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= entry&.score %></td>
+                            <% end %>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

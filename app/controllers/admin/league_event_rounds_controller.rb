@@ -29,6 +29,8 @@ class Admin::LeagueEventRoundsController < ApplicationController
     @round = League::Event::Round.new(rounds_params)
     @round.event = @event
     if @round.save
+      @event.update(number_of_rounds: @event.rounds.count)
+
       redirect_to admin_league_event_rounds_path(@league, @event)
     else
       redirect_to admin_leagues_path
@@ -38,8 +40,8 @@ class Admin::LeagueEventRoundsController < ApplicationController
 	def destroy
     @round = League::Event::Round.find(params[:id])
 		@round.destroy
-
-    redirect_to admin_leagues_path
+    @event.update(number_of_rounds: @event.rounds.count)
+    redirect_to admin_league_event_rounds_path
   end
 
   private

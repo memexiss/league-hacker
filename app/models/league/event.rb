@@ -1,7 +1,9 @@
 class League::Event < ApplicationRecord
   belongs_to :league, inverse_of: :events
   has_many :rounds, inverse_of: :event, dependent: :destroy
+  has_many :teams, class_name: 'League::Event::Team', dependent: :destroy
   accepts_nested_attributes_for :rounds
+  accepts_nested_attributes_for :teams
   has_many :flights
 
   enum status: {draft: 0, active: 5}

@@ -3,6 +3,7 @@
   <head>
     <title>LeagueHacker</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= favicon_link_tag 'league-hacker-icon.ico' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <!-- sprockets -->
@@ -14,8 +15,11 @@
   </head>
 
   <body class="h-full">
-    <main>
-      <%= yield %>
-    </main>
+  <main>
+    <% unless controller_path.start_with?('admin/') || devise_controller? %>
+      <%= render "layouts/navbar" %>
+    <% end %>
+    <%= yield %>
+  </main>
   </body>
 </html>

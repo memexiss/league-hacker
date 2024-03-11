@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   resources :users, except: :create
   root to: "home#index"
   resources :golf_courses
-  resources :leagues
+  resources :leagues do
+    resources :announcements, controller: "league_announcements"
+    resources :events, controller: "league_events"
+  end
+  resources :league_memberships, only: [:create, :destroy]
+  resources :scorecard_entries
   namespace :admin do
     root 'dashboard#index'
     resources :golf_courses do
@@ -22,7 +27,6 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :league_announcements
     resources :league_memberships
     resources :league_event_round_scorecards_entries
     resources :league_event_flights

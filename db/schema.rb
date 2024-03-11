@@ -122,6 +122,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
     t.index ["event_id"], name: "index_league_event_flights_on_event_id"
   end
 
+  create_table "league_event_round_scorecard_entries", force: :cascade do |t|
+    t.integer "score"
+    t.datetime "submitted_at"
+    t.bigint "scorecard_id"
+    t.bigint "hole_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hole_id"], name: "index_league_event_round_scorecard_entries_on_hole_id"
+    t.index ["scorecard_id"], name: "index_league_event_round_scorecard_entries_on_scorecard_id"
+  end
+
   create_table "league_event_round_scorecards", force: :cascade do |t|
     t.bigint "round_id"
     t.bigint "user_id"
@@ -135,17 +146,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
     t.datetime "updated_at", null: false
     t.index ["round_id"], name: "index_league_event_round_scorecards_on_round_id"
     t.index ["user_id"], name: "index_league_event_round_scorecards_on_user_id"
-  end
-
-  create_table "league_event_round_scorecards_entries", force: :cascade do |t|
-    t.integer "score"
-    t.datetime "submitted_at"
-    t.bigint "scorecard_id"
-    t.bigint "hole_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["hole_id"], name: "index_league_event_round_scorecards_entries_on_hole_id"
-    t.index ["scorecard_id"], name: "index_league_event_round_scorecards_entries_on_scorecard_id"
   end
 
   create_table "league_event_rounds", force: :cascade do |t|
@@ -162,13 +162,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
     t.index ["event_id"], name: "index_league_event_rounds_on_event_id"
   end
 
-  create_table "league_event_team_users", force: :cascade do |t|
+  create_table "league_event_team_team_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_league_event_team_users_on_team_id"
-    t.index ["user_id"], name: "index_league_event_team_users_on_user_id"
+    t.index ["team_id"], name: "index_league_event_team_team_users_on_team_id"
+    t.index ["user_id"], name: "index_league_event_team_team_users_on_user_id"
   end
 
   create_table "league_event_teams", force: :cascade do |t|
@@ -220,7 +220,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
     t.string "phone"
     t.integer "role", default: 0
     t.string "ghin_number"
