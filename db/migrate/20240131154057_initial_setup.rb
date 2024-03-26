@@ -204,6 +204,13 @@ class InitialSetup < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    create_table :league_announcement_reads do |t|
+      t.references :league_announcement, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.datetime :read_at
+      
+      t.timestamps
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_214728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
     t.string "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "league_announcement_reads", force: :cascade do |t|
+    t.bigint "league_announcement_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_announcement_id"], name: "index_league_announcement_reads_on_league_announcement_id"
+    t.index ["user_id"], name: "index_league_announcement_reads_on_user_id"
   end
 
   create_table "league_announcements", force: :cascade do |t|
@@ -235,4 +245,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_012144) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "league_announcement_reads", "league_announcements"
+  add_foreign_key "league_announcement_reads", "users"
 end

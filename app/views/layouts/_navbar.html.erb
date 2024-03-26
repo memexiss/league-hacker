@@ -1,23 +1,22 @@
-<nav class="bg-white">
-  <div class="mx-auto h-16 flex max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-    <div class="mr-2 sm:hidden">
-      <button id="burger-btn" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-        <div class="justify-center mx-auto mt-6 flex h-6 w-6"> <%= image_tag("burguer-icon.svg") %></div>
+<nav>
+  <div class="mx-auto h-16 flex px-4 sm:px-6 py-auto mx-auto justify-center content-center relative">
+    <div id="dropdown-container" class="mr-2 mt-4 sm:hidden w-[50px] rounded-tr-lg rounded-tl-lg">
+      <button id="burger-btn" class="mx-auto justify-center flex focus:outline-none">     
+        <i class="fa-solid fa-bars fa-2xl h-6 h-6 py-auto content-center justify-center mx-auto mt-6 flex" style="color: #EBCB00"></i>    
       </button>
 
-      <div id="dropdown-menu" class="hidden w-3/6 rounded-lg absolute z-10 bg-black border border-gray-200">
+      <div id="dropdown-menu" class="hidden w-3/6 rounded-br-lg rounded-bl-lg rounded-tr-lg absolute z-10 bg-white">
         <% if user_signed_in? %>
-          <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'block text-md px-4 py-2 text-gray-800 text-white' %>
+          <%= link_to "Announcements", league_announcements_path(current_user.memberships.first.league.announcements.first), class: "block text-base px-4 py-2 text-gray-800 text-black font-bold"%>
+          <%= link_to "League Help", league_help_path(current_user.memberships.first.league) , class: "block text-base px-4 py-2 text-gray-800 text-black font-bold"%>
+          <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'block text-base px-4 py-2 text-gray-800 text-black font-bold' %>
         <% else %>
-          <%= link_to 'Log in', new_user_session_path, class: 'block text-md px-4 py-2 text-gray-800 text-white' %>
-          <%= link_to 'Sign up', new_user_registration_path, class: 'block text-md px-4 py-2 text-gray-800 text-white' %>
+          <%= link_to 'Log in', new_user_session_path, class: 'block text-base px-4 py-2 text-gray-800 text-black font-bold' %>
+          <%= link_to 'Sign up', new_user_registration_path, class: 'block text-base px-4 py-2 text-gray-800 text-black font-bold' %>
         <% end %>  
-        <% if user_signed_in? %>
-          <% if current_user.admin? %>
-            <%= link_to "Admin Panel", admin_root_path, class: "block text-md px-4 py-2 text-gray-800 text-white" %>
-          <% end %>
+        <% if user_signed_in? && current_user.admin? %>
+            <%= link_to "Admin Panel", admin_root_path, class: "block text-base px-4 py-2 text-gray-800 text-black font-bold" %>
         <% end %>
-          <%= link_to "Leagues", leagues_path, class: "px-4 py-2 text-md font-medium text-white"%>
       </div>
     </div>
     <div class="-mr-2 flex sm:hidden">
@@ -26,7 +25,7 @@
       <div class="flex justify-center mx-auto ">
         <div class="flex-shrink-0">
           <a class="brandName" href="/">
-            <div class="justify-center mx-auto mt-6 flex w-[180px] h-[180px]"> <%= image_tag("league-hacker.svg") %></div>
+            <div class="justify-center mx-auto mt-6 flex"> <%= image_tag("league-hacker-light.svg", class: "w-[280px] pt-3.5 h-fit") %></div>
           </a>
         </div>
 
@@ -47,20 +46,3 @@
     </div>
   </div>
 </nav>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const burgerBtn = document.getElementById('burger-btn');
-  const dropdownMenu = document.getElementById('dropdown-menu');
-
-  burgerBtn.addEventListener('click', function () {
-    dropdownMenu.classList.toggle('hidden');
-  });
-
-  document.addEventListener('click', function (event) {
-    if (!event.target.closest('#burger-btn') && !event.target.closest('#dropdown-menu')) {
-      dropdownMenu.classList.add('hidden');
-    }
-  });
-});
-</script>

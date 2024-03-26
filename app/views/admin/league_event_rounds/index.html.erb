@@ -24,10 +24,10 @@
             <div class="flex min-w-0 gap-x-4">
             <div class="block">
               <div class="flex">
-                <p class="text-md pr-3">Start Date: <%= round.start_date.to_formatted_s(:short) %></p>
-                <p class="text-md ">End Date: <%= round.end_date.to_formatted_s(:short) %></p>
+                <p class="text-base pr-3">Start Date: <%= round.start_date.to_formatted_s(:short) %></p>
+                <p class="text-base ">End Date: <%= round.end_date.to_formatted_s(:short) %></p>
               </div>
-              <p class="text-md text-gray-600">Scoring Format: <%= round.scoring_format %></p>
+              <p class="text-base text-gray-600">Scoring Format: <%= round.scoring_format %></p>
             </div>
 
             </div>
@@ -50,13 +50,13 @@
             </div>
           </li>
           <ul role="list" class="divide-y bg-gray-50 divide-gray-100 overflow-hidden shadow-sm ring-1 ring-gray-900/5 flex py-3 divide-x border-x border-gray-900/5">
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               Starting Hole <%= round.starting_hole %>
             </div>
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               <%= round.number_of_holes %> Holes
             </div>
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               <%= round.event.league.league_type.titleize %> Score
             </div>
           </ul>

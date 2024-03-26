@@ -27,10 +27,10 @@
             <div class="flex min-w-0 gap-x-4">
             <div class="block">
               <div class="flex">
-                <p class="text-md pr-3">Start Date: <%= event.start_date.to_formatted_s(:short) %></p>
-                <p class="text-md ">End Date: <%= event.end_date.to_formatted_s(:short) %></p>
+                <p class="text-base pr-3">Start Date: <%= event.start_date.to_formatted_s(:short) %></p>
+                <p class="text-base ">End Date: <%= event.end_date.to_formatted_s(:short) %></p>
               </div>
-              <p class="text-md text-gray-600">Event Type: <%= event.event_type %></p>
+              <p class="text-base text-gray-600">Event Type: <%= event.event_type %></p>
             </div>
 
             </div>
@@ -50,20 +50,20 @@
             </div>
           </li>
           <ul role="list" class="divide-y bg-gray-50 divide-gray-100 overflow-hidden shadow-sm ring-1 ring-gray-900/5 flex py-3 divide-x border-x border-gray-900/5">
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               Entry Fee <%= event.entry_fee %>
             </div>
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               <% if event.number_of_rounds.nil? || event.number_of_rounds.zero? %>
                 No Rounds
               <% else %>
                 <%= event.number_of_rounds %> Rounds
               <% end %>
             </div>
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               <%= event.per_round_fee %> Per Round Fee
             </div>
-            <div class="mx-auto text-center justify-center text-md">
+            <div class="mx-auto text-center justify-center text-base">
               <%= event.average_holes_per_round %> Average holes per round
             </div>
           </ul>

@@ -1,45 +1,89 @@
-<h1><%= @league.name %></h1>
-
-<div>
-  <h2>Announcements</h2>
-  <% @league.announcements.each do |announcement| %>
-    <div class="max-auto">
+<div class="py-8 px-4">
+<% if @scorecards.present? %>
+  <div class="mx-auto justify-center w-full bg-gray-900 bg-opacity-50 rounded-2xl">
+    <div class="flex justify-evenly">
       <div class="block py-2">
-        <h3><%= announcement.title %></h3>
-        <p><%= announcement.body %></p>
+        <h1 class="text-base font-bold text-white ml-2"> <%= current_user.full_name %> </h1>
+        <%= link_to user_path(current_user), class: "text-xs text-white ml-2 font-bold uppercase"  do %>
+          <i class="fa-solid fa-gear text-white"></i>
+          My Profile
+        <% end %>
+        </div>
+      <%= link_to new_round_scorecard_path(@scorecards.first.round_id), class: "bg-league-yellow my-auto ml-2 rounded-2xl flex px-3 py-2 text-center text-sm font-semibold text-black shadow-sm"  do %>
+        Post Score
+        <%= image_tag("golf-club.svg", class: "flex align-center h-[20px] justify-center ml-2 py-auto") %>             
+      <% end %>
+    </div>
+    <div class="relative flex py-2 items-center">
+      <div class="flex-grow border-t border-gray-900"></div>
+        <span class="flex-shrink mx-4 text-white font-bold uppercase text-sm">Player Stats</span>
+      <div class="flex-grow border-t border-gray-900"></div>
+    </div>
+    <div class="flex justify-evenly py-2 text-league-yellow">
+      <div class="block uppercase text-xs">
+        Gross
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
       </div>
-      <div class="block py-2">
-        <p>Status: <%= announcement.status %></p>
-        <%= link_to 'Edit Announcement', edit_league_announcement_path(@league, announcement) %>
+      <div class="block uppercase text-xs">
+        Net
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+      <div class="block uppercase text-xs">
+        Payout
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+      <div class="block uppercase text-xs">
+        Pts
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
       </div>
     </div>
-  <% end %>
-  <% if current_user.memberships.find_by(league: @league, membership_type: 'manager') %>
-    <%= link_to 'New Announcement', new_league_announcement_path(@league) %>
-  <% end %>
-</div>
-
-<div>
-  <h2>Announcements</h2>
-  <% @league.events.each do |event| %>
-    <div class="max-auto">
-      <div class="block py-2">
-        <h3><%= event.inspect %></h3>
+  </div>
+  <div class="justify-center mx-auto w-full">
+    <div class="px-4 sm:px-6 lg:px-12">
+      <% if user_signed_in? && @memberships.any? %> 
+      <div class="mt-4 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-12">
+          <div class="py-2 bg-league-gray text-white rounded-tr-2xl rounded-tl-2xl">
+            <h1 class="text-base uppercase text-center font-semibold leading-6 text-white mx-auto justify-center flex"> <%= image_tag("TROPHY.svg", class: "flex align-center justify-center mx-4 py-auto") %> Leaderboard <%= image_tag("TROPHY.svg", class: "flex align-center justify-center mx-4 py-auto") %></h1>
+          </div>
+          <table class="min-w-full divide-y divide-gray-700 text-league-yellow rounded-br-2xl rounded-bl-2xl overflow-hidden">
+            <thead class="bg-gray-900 bg-opacity-50">
+              <tr>
+                <th scope="col" class="py-3.5 uppercase text-center text-xs font-semibold">POS</th>
+                <th scope="col" class="py-3.5 uppercase text-left text-xs font-semibold">Name</th>
+                <th scope="col" class="py-3.5 uppercase text-center text-xs font-semibold">Gross</th>
+                <th scope="col" class="py-3.5 uppercase text-center text-xs font-semibold">Net</th>
+                <th scope="col" class="py-3.5 uppercase text-center text-xs font-semibold">Payout</th>
+              </tr>
+            </thead>
+            <tbody class="bg-gray-900 bg-opacity-50">
+              <% @scorecards.each_with_index do |scorecard, index| %>
+                <tr class="<%= index.even? ? 'even:bg-gray-50' : 'odd:bg-gray-50' %>">
+                  <td class="whitespace-nowrap py-4 text-center text-sm text-white"><%= index + 1 %></td>
+                  <td class="whitespace-nowrap py-4 text-sm text-white"><%= scorecard.user.full_name %></td>
+                  <td class="whitespace-nowrap py-4 text-sm text-white text-center"><%= scorecard.score_gross %></td>
+                  <td class="whitespace-nowrap py-4 text-sm text-white text-center"><%= scorecard.score_net %></td>
+                  <td class="whitespace-nowrap py-4 text-sm text-white text-center">--</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
       </div>
-      <div class="block py-2">
-        <%= link_to 'Edit Event', edit_league_event_path(@league, event) %>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-<div class="mt-5 flex lg:ml-4 lg:mt-0 pt-12 py-10">
-  <span class="hidden sm:block">
-    <%= link_to new_league_event_path(league_id: @league.id), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"  do %>
-      <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
-      </svg>                    
-      Create Event
     <% end %>
-  </span>
+    </div>
+  </div>
+<% else %>
+  Join a League!
+<% end %>
+</div>
+
+<div class="w-5/6 mx-auto justify-center block">
+  <%= link_to "Enter Weekly Skins", root_path, class: "flex w-full justify-center rounded-full px-3 py-1.5 text-base font-semibold leading-6 text-black shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-league-yellow" %>
+  <div class="flex mx-auto justify-center">
+    <%= link_to "Share League", root_path, class: "flex text-white text-sm mx-2 py-4 justify-center font-bold" %>
+    <i class="fa-solid fa-qrcode flex text-white text-sm mx-2 py-4 justify-center font-bold"></i>
+  </div>
 </div>

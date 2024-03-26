@@ -1,0 +1,53 @@
+<div class="px-4 sm:px-6 lg:px-12">
+  <div class="mt-4 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block w-full align-middle">
+      <div class="py-2 bg-league-gray text-white rounded-tr-2xl rounded-tl-2xl">
+        <h1 class="text-base uppercase text-center font-semibold leading-6 text-white mx-auto justify-center flex"> Post Score</h1>
+      </div>
+    <%= form_with(model: @scorecard, url: round_scorecards_path(@round), method: :post) do |form| %>
+      <table class="w-full divide-y divide-gray-700 text-league-yellow rounded-br-2xl rounded-bl-2xl ">
+        <thead class="bg-gray-900 bg-opacity-50">
+          <tr class="text-xs">
+            <th scope="col" class="uppercase text-center text-xs font-semibold px-2 py-2">Hole</th>
+            <th scope="col" class="uppercase text-center text-xs font-semibold px-2 py-2">Yards</th>
+            <th scope="col" class="uppercase text-center text-xs font-semibold px-2 py-2">Par</th>
+            <th scope="col" class="uppercase text-center text-xs font-semibold px-2 py-2">Score</th>
+          </tr>
+        </thead>
+        <tbody class="rounded-br-2xl divide-y divide-gray-700 rounded-bl-2xl">
+          <% GolfCourse::Hole.all.each do |hole| %>
+          <tr class="text-xs text-white bg-gray-900 bg-opacity-50">
+              <td class="text-center py-1 text-xs text-white px-2"><%= hole.hole %></td>
+              <td class="text-xs py-1 text-center text-white px-2"><%= hole.tees.first.yards %></td>
+              <td class="text-xs py-1 text-white px-2 text-center"><%= hole.par %></td>
+              <td class="text-xs py-1 text-white px-2 text-center px-2">
+                <%= form.fields_for :entries do |entry_form| %>
+                  <%= entry_form.hidden_field :hole_id, value: hole.id %>
+                  <%= entry_form.number_field :score, class: "w-[50px] bg-gray-900 border-0 bg-opacity-50" %>
+                <% end %>
+              </td>
+          </tr>
+          <% end %>
+          <tr class="text-xs text-white bg-league-gray bg-opacity-50">
+            <td class="text-center text-league-yellow font-bold py-2 text-sm text-white px-2">Total</td>
+            <td class="text-sm font-bold py-2 text-center text-white px-2"><%= @total_yards %></td>
+            <td class="text-sm font-bold py-2 text-white px-2 text-center"><%= @total_par %></td>
+            <td class="text-sm font-bold py-2 text-white px-2 text-center px-2"><%= @total_score %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
+      <div class="bg-league-gray w-full justify-evenly bg-opacity-50 flex rounded-br-2xl py-4 rounded-bl-2xl text-white">
+        <%
+=begin%>
+ <%= button_to "Scorecard Picture", root_path, method: :post, class: "flex justify-center rounded-full px-4 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-league-yellow" %> 
+<%
+=end%>
+        <%= button_to "Submit Score", round_scorecards_path(@round), method: :post, class: "flex justify-center rounded-full px-4 py-1.5 text-base font-semibold leading-6 text-black shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-league-yellow" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

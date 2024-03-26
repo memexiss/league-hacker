@@ -15,7 +15,7 @@
     <div class='flex justify-center gap-1 5 break-all mt-4'>
       <section class='w-2/3'>
         <div class="inline-block min-w-full py-2 align-middle">
-          <table class="min-w-full divide-y divide-gray-300">
+          <table class="min-w-full divide-y divide-gray-700">
             <thead>
               <tr>
                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Player/Team Name</th>
@@ -30,7 +30,7 @@
             <tbody class="divide-y divide-gray-200">
               <% @round.scorecards.each do |scorecard| %>
                 <tr>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= scorecard.user.name %></td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= scorecard.user.full_name %></td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_gross %></td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_net %></td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scorecard.score_chicago %></td>

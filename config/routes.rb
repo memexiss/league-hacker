@@ -5,11 +5,17 @@ Rails.application.routes.draw do
   root to: "home#index"
   resources :golf_courses
   resources :leagues do
-    resources :announcements, controller: "league_announcements"
+    resources :league_help, controller: "league_help", only: [:index]
+    get 'help', to: 'league_help#index', as: 'help'
+    resources :announcements, controller: "league_announcements" do 
+      post 'mark_as_read', on: :member
+    end
     resources :events, controller: "league_events"
   end
   resources :league_memberships, only: [:create, :destroy]
-  resources :scorecard_entries
+  resources :rounds, controller: 'league_event_rounds', only: [:new, :edit, :create, :destroy, :update, :show, :index] do
+    resources :scorecards
+  end
   namespace :admin do
     root 'dashboard#index'
     resources :golf_courses do
