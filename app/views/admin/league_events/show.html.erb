@@ -1,0 +1,58 @@
+<%= render "layouts/sidebar" %>
+  <main class="py-10 lg:pl-72">
+  <div class="container mx-auto">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="lg:flex lg:items-center lg:justify-between">
+      <div class="min-w-0 flex-1">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"> <%= @event.league.name %> </h2>
+      </div>
+      <div class="mt-5 flex lg:ml-4 lg:mt-0">
+      <span class="hidden sm:block">
+        <%= link_to admin_league_event_rounds_path(league_id: @league.id, event_id: @event.id), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"  do %>
+          <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+          </svg>                    
+          Manage Rounds
+        <% end %>
+      </span>
+      </div>
+    </div>
+  </div>
+    <div class='flex justify-center gap-1 5 break-all mt-4'>
+      <section class='w-2/3'>
+        <div class="inline-block min-w-full py-2 align-middle">
+          <table class="min-w-full divide-y divide-gray-700">
+            <thead>
+              <tr>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Event Type</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Start Date</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">End Date</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Entry Fee</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Number of rounds</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Per round fee</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Average holes per round</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">League</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.event_type %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.start_date %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.end_date %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.entry_fee %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.number_of_rounds %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.per_round_fee %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.average_holes_per_round %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.status %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= @event.league %></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>

@@ -10,5 +10,5 @@
 
 user = User.find_or_initialize_by email: "admin@leaguehacker.com"
 if user.new_record? 
-  user.update name: "Admin", role: :admin, phone: "5554321234", password: '1234567890'
+  user.update first_name: "Admin", last_name: "League Hacker", role: :admin, phone: "5554321234", password: '1234567890'
 end

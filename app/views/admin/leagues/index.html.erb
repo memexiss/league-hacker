@@ -2,26 +2,33 @@
   <main class="py-10 lg:pl-72">
   <div class="container mx-auto">
   <div class="px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold leading-6 text-gray-900">Leagues</h1>
-        <p class="mt-2 text-sm text-gray-700">A list of all the Leagues.</p>
+    <div class="lg:flex lg:items-center lg:justify-between">
+      <div class="min-w-0 flex-1">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Create a League or Tournament</h2>
       </div>
-      <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-        <button type="button">
-          <%= link_to 'Add League', new_admin_league_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-        </button>
+      <div class="mt-5 flex lg:ml-4 lg:mt-0">
+        <span class="hidden sm:block">
+          <%= link_to new_admin_league_path, class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"  do %>
+            <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+            </svg>                    
+            Create League
+          <% end %>
+        </span>
       </div>
     </div>
     <div class="flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="min-w-0 flex-1 mt-10 inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <h3 class="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Leagues and Tournaments</h3>
+      </div>
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Payment Link</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">League Type</th>
+                <th scope="col" class="py-3.5 text-left text-sm font-semibold text-gray-900 sm:pl-0">Logo</th>
+                <th scope="col" class="py-3.5 pr-20 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                <th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Tournament Type</th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                   <span class="sr-only">Edit</span>
                 </th>
@@ -30,62 +37,20 @@
             <tbody class="divide-y divide-gray-200">
               <% @leagues.each do |league| %>
                 <tr>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= league.name %></td>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= league.payment_link %></td>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= league.league_type %></td>
-
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                  <td class="whitespace-nowrap py-4 text-sm font-medium text-indigo-600 hover:text-indigo-900 sm:pl-0 "><% if league.logo.attached? %><%= image_tag(league.logo, width: '180', height: '180') %><% end %></td>
+                  <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-indigo-600 hover:text-indigo-900 sm:pl-0"><%= link_to league.name, admin_league_path(league) %></td>
+                  <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                    <% if league.events.first %>
+                      <%= league.events.first&.event_type&.titleize %>
+                    <% else %>
+                      No events setup yet 
+                    <% end %>
+                    </td>
+                  <td class="relative py-4 text-right text-sm font-medium sm:pr-0">
                     <%= link_to 'Edit', edit_admin_league_path(league), class: "text-indigo-600 hover:text-indigo-900" %>
                   </td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                  <td class="relative py-4 text-right text-sm font-medium sm:pr-0">
                     <%= button_to 'Delete league', admin_league_path(league), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-indigo-600 hover:text-indigo-900" %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="px-4 sm:px-6 lg:px-8 pt-12">
-    <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold leading-6 text-gray-900">Memberships</h1>
-      </div>
-      <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-        <button type="button">
-          <%= link_to 'Add Membership', new_admin_league_membership_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-        </button>
-      </div>
-    </div>
-    <div class="flow-root">
-      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead>
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">User</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">League</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Membership type</th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span class="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <% @memberships.each do |membership| %>
-                <tr>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= membership.user.name %></td>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= membership.league.name %></td>
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= membership.membership_type %></td>
-
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <%= link_to 'Edit', edit_admin_league_membership_path(membership), class: "text-indigo-600 hover:text-indigo-900" %>
-                  </td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <%= button_to 'Delete membership', admin_league_membership_path(membership), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-indigo-600 hover:text-indigo-900" %>
                   </td>
                 </tr>
               <% end %>

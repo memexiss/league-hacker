@@ -4,7 +4,18 @@ Rails.application.routes.draw do
   resources :users, except: :create
   root to: "home#index"
   resources :golf_courses
-  resources :leagues
+  resources :leagues do
+    resources :league_help, controller: "league_help", only: [:index]
+    get 'help', to: 'league_help#index', as: 'help'
+    resources :announcements, controller: "league_announcements" do 
+      post 'mark_as_read', on: :member
+    end
+    resources :events, controller: "league_events"
+  end
+  resources :league_memberships, only: [:create, :destroy]
+  resources :rounds, controller: 'league_event_rounds', only: [:new, :edit, :create, :destroy, :update, :show, :index] do
+    resources :scorecards
+  end
   namespace :admin do
     root 'dashboard#index'
     resources :golf_courses do
@@ -15,12 +26,14 @@ Rails.application.routes.draw do
     resources :golf_course_hole_tee
     resources :golf_course_holes
     resources :golf_course_tee_boxes
-    resources :leagues
-    resources :league_announcements
+    resources :leagues do
+      resources :events, controller: 'league_events' do
+        resources :rounds, controller: 'league_event_rounds' do 
+          resources :scorecards, controller: 'league_event_round_scorecards' 
+        end
+      end
+    end
     resources :league_memberships
-    resources :league_events 
-    resources :league_event_rounds
-    resources :league_event_round_scorecards
     resources :league_event_round_scorecards_entries
     resources :league_event_flights
     resources :league_event_flight_memberships

@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+.golf-bg {
+  background-image: url("bg-photo.png") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+.bg-league-green-1 {
+  background: rgba(45,156,137, 1);
+}
+.bg-league-yellow {
+  background-color: #EBCB00 !important;
+}
+.text-league-yellow {
+  color: #EBCB00 !important;
+}
+.bg-league-gray {
+  background-color: #2e2e2e !important;
+}

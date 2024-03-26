@@ -1,0 +1,69 @@
+<div class="py-8 px-4">
+  <div class="mx-auto justify-center w-full bg-gray-900 bg-opacity-50 rounded-2xl">
+    <div class="flex justify-evenly">
+      <div class="block py-2">
+        <h1 class="text-base font-bold text-white ml-2"> <%= current_user.full_name %> </h1>
+        <%= link_to user_path(current_user), class: "text-xs text-white ml-2 font-bold uppercase"  do %>
+          <i class="fa-solid fa-gear text-white"></i>
+          My Profile
+        <% end %>
+        </div>
+      <%= link_to new_round_scorecard_path(@scorecards.first.round_id), class: "bg-league-yellow my-auto ml-2 rounded-2xl flex px-3 py-2 text-center text-sm font-semibold text-black shadow-sm"  do %>
+        Post Score
+        <%= image_tag("golf-club.svg", class: "flex align-center h-[20px] justify-center ml-2 py-auto") %>             
+      <% end %>
+    </div>
+    <div class="relative flex py-2 items-center">
+      <div class="flex-grow border-t border-gray-400"></div>
+        <span class="flex-shrink mx-4 text-white font-bold uppercase text-sm">Player Stats</span>
+      <div class="flex-grow border-t border-gray-400"></div>
+    </div>
+    <div class="flex justify-evenly py-2 text-league-yellow">
+      <div class="block uppercase text-xs">
+        Gross
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+      <div class="block uppercase text-xs">
+        Net
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+      <div class="block uppercase text-xs">
+        Payout
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+      <div class="block uppercase text-xs">
+        Pts
+        <p class="text-white font-bold text-sm text-center"> 30 </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="relative flex py-2 items-center px-6">
+  <div class="flex-grow border-t border-black"></div>
+    <span class="flex-shrink mx-4 text-white font-bold uppercase text-base">League Announcements</span>
+  <div class="flex-grow border-t border-black"></div>
+</div>
+<% @announcements.order(created_at: :desc).each do |announcement| %>
+  <div class="py-8 px-4">
+    <div class="mx-auto text-white justify-center w-full bg-gray-900 bg-opacity-50 rounded-2xl">
+      <div class="flex py-2 bg-league-gray rounded-tr-2xl rounded-tl-2xl justify-evenly">
+        <div class="flex">
+          <% unless current_user.announcement_reads.exists?(league_announcement_id: announcement.id) %>
+            <div class="bg-league-yellow rounded-full mx-2 my-auto block align-center w-3 h-3 inline-block"></div>
+          <% end %>
+          <p class="text-base font-bold"> <%= announcement.title %> </p>
+        </div>
+        <p class="text-base font-bold"> <%= announcement.created_at.strftime("%b %d, %Y") %> </p>
+      </div>
+      <div class="px-4 justify-evenly py-2">
+        <p class="text-sm px-2 pb-2"> <%= announcement.body %> </p>
+        <% unless current_user.announcement_reads.pluck(:league_announcement_id).include?(announcement.id) %>
+          <%= button_to mark_as_read_league_announcement_path(league_id: @league.id, id: announcement.id), method: :post, class: "text-xs font-bold px-2 py-4" do %>
+            Mark as read
+            <i class="fa-solid font-bold text-sm fa-check py-auto ml-1"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

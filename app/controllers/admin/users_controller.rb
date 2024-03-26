@@ -49,9 +49,9 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_root_path, alert: 'Admins only!'
   end
   def user_params
-    params.require(:user).permit(:name, :email, :role, :password, :password_confirmation, :phone, :ghin_handicap, :ghin_number)
+    params.require(:user).permit(:first_name, :last_name, :email, :role, :password, :password_confirmation, :phone, :ghin_handicap, :ghin_number)
   end
   def user_edit_params
-    params.require(:user).permit(:name, :email, :phone, :role, :ghin_handicap, :ghin_number)
+    params.require(:user).permit(:first_name, :last_name, :email, :phone, :role, :ghin_handicap, :ghin_number)
   end
 end

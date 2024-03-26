@@ -1,0 +1,26 @@
+<div class="py-8 px-4">
+  <div class="mx-auto justify-center w-full bg-gray-950 bg-opacity-50 rounded-2xl">
+    <div class="flex">
+    <div class="flex align-center mx-auto py-4 text-league-yellow">
+      <div class="flex px-4">
+        <h1 class="text-sm font-bold text-white"> <%= current_user.full_name %> </h1>
+      </div>
+      <div class="flex px-4">
+        <div class="block uppercase text-xs px-2">
+          Gross
+          <p class="text-white font-bold text-sm text-center"> 30 </p>
+        </div>
+        <div class="block uppercase text-xs px-2">
+          Net
+          <p class="text-white font-bold text-sm text-center"> 30 </p>
+        </div>
+        <div class="block uppercase text-xs px-2">
+          Payout
+          <p class="text-white font-bold text-sm text-center"> $30 </p>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+  <%= render "form" %>
+</div>

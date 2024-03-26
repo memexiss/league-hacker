@@ -32,7 +32,8 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string :name 
+      t.string :first_name 
+      t.string :last_name  
       t.string :phone 
       t.integer :role, default: 0
       t.string :ghin_number 
@@ -120,7 +121,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_rounds do |t|
+    create_table :league_event_rounds do |t|
       t.integer :position
       t.integer :scoring_format
       t.integer :playing_format
@@ -133,14 +134,14 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_flights do |t|
+    create_table :league_event_flights do |t|
       t.string :name
       t.references :event
 
       t.timestamps
     end
 
-    create_table :league_events_teams do |t|
+    create_table :league_event_teams do |t|
       t.references :event
       t.string :name
       t.integer :handicap_format, default: 0 
@@ -157,7 +158,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_rounds_scorecards do |t|
+    create_table :league_event_round_scorecards do |t|
       t.references :round
       t.references :user
       t.decimal :score_gross
@@ -170,14 +171,14 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_flight_memberships do |t|
+    create_table :league_event_flight_memberships do |t|
       t.references :flight
       t.references :user
       
       t.timestamps
     end
 
-    create_table :league_events_rounds_scorecards_entries do |t|
+    create_table :league_event_round_scorecard_entries do |t|
       t.integer :score
       t.datetime :submitted_at
       t.references :scorecard
@@ -186,7 +187,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    create_table :league_events_team_users do |t|
+    create_table :league_event_team_team_users do |t|
       t.references :user
       t.references :team
 
@@ -203,6 +204,13 @@ class InitialSetup < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    create_table :league_announcement_reads do |t|
+      t.references :league_announcement, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.datetime :read_at
+      
+      t.timestamps
   end
 
 end

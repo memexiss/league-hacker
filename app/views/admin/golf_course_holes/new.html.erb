@@ -1,22 +1,4 @@
 <%= render "layouts/sidebar" %>
-    <main class="py-10 lg:pl-72">
-      <%= form_for ([:admin, @course_holes]) do |f| %>
-        <div class="field">
-          <%= f.label :hole %><br />
-          <%= f.text_field :hole, autofocus: true %>
-        </div>
-        <div class="field">
-          <%= f.label :par %><br />
-          <%= f.text_field :par %>
-        </div>
-        <div class="field">
-          <%= f.label :handicap %><br />
-          <%= f.text_field :handicap %>
-        </div>
-        <div class="field">
-          <%= f.label :golf_course_id %><br />
-          <%= f.select :golf_course_id, @courses.map { |course| [course.name, course.id] } %>
-        </div>
-        <%= f.submit 'Create Course Hole' %>
-      <% end %>
-    </main>
+  <main class="py-10 lg:pl-72">
+    <%= render "form" %>
+  </main>
