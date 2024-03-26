@@ -1,4 +1,7 @@
 <div class="py-8 px-4">
+<% if current_user.memberships.exists?(league_id: @league.id, membership_type: "manager") %>
+  <%= link_to "New Event", new_league_event_path(@league) , class: "block text-base px-4 py-2 text-gray-800 text-black font-bold"%>
+<% end %>
 <% if @scorecards.present? %>
   <div class="mx-auto justify-center w-full bg-gray-900 bg-opacity-50 rounded-2xl">
     <div class="flex justify-evenly">
@@ -76,7 +79,7 @@
     </div>
   </div>
 <% else %>
-  Join a League!
+  No Scores yet
 <% end %>
 </div>
 

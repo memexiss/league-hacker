@@ -11,7 +11,12 @@ class LeaguesController < ApplicationController
   def show 
     if user_signed_in? && current_user.memberships.any?
       @memberships = current_user.memberships.includes(league: { events: { rounds: :scorecards } })
-      @scorecards =  current_user.memberships.first.league.events.first.rounds.first.scorecards.order(score_gross: :desc)
+      
+      if @memberships.any? && @memberships.first.league.events.any? && @memberships.first.league.events.first.rounds.any?
+        @scorecards = @memberships.first.league.events.first.rounds.first.scorecards.order(score_gross: :desc)
+      else
+        @scorecards = [] # Set @scorecards to an empty array if no events or rounds exist
+      end
     else
       
     end

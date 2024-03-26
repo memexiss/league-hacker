@@ -211,6 +211,7 @@ class InitialSetup < ActiveRecord::Migration[7.1]
       t.datetime :read_at
       
       t.timestamps
+    end
   end
 
 end
