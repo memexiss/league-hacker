@@ -15,24 +15,17 @@ class ScorecardsController < ApplicationController
   end
 
   def create
-    if @round.scorecards.exists?(user_id: current_user.id)
-      redirect_to root_path, alert: 'You have already posted a score for this round.'
-      return
-    end
-  
-    @scorecard = @round.scorecards.build(scorecard_params)
-    @scorecard.user_id = current_user.id
-  
+    @scorecard= @round.scorecards.find_or_initialize_by(user_id: current_user.id)
+    @scorecard.assign_attributes(scorecard_params)
+    total_score = @scorecard.entries.sum(:score)
+    @scorecard.assign_attributes(
+      score_gross: total_score,
+      score_net: total_score,
+      score_chicago: total_score,
+      score_best_of_holes: total_score,
+      score_stableford: total_score
+    )
     if @scorecard.save
-      total_score = @scorecard.entries.sum(:score)
-      @scorecard.update(
-        score_gross: total_score,
-        score_net: total_score,
-        score_chicago: total_score,
-        score_best_of_holes: total_score,
-        score_stableford: total_score
-      )
-  
       redirect_to root_path, notice: 'Scorecard created successfully.'
     else
       render :new
